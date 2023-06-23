@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}
+label, input, select {
+    margin: 10px 0;
+}
+select {
+    width: 50%;
+}
