@@ -13,9 +13,15 @@
     <h1 class="main-title">Currency Converter Vanilla</h1>
     <label for="amount">Amount:</label>
     <input type="number" id="amount" value="100" />
-    <div class="dropdowns">
-      <select id="from-currency-select"></select>
-      <select id="to-currency-select"></select>
+    
+    <div class="autocomplete">
+      <input type="text" id="fromCurrencyInput" placeholder="From currency" />
+      <div id="fromAutocompleteItems" class="autocomplete-items"></div>
+    </div>
+
+    <div class="autocomplete">
+      <input type="text" id="toCurrencyInput" placeholder="To currency" />
+      <div id="toAutocompleteItems" class="autocomplete-items"></div>
     </div>
     <button id="convert-button">Convert</button>
     <p id="result"></p>

@@ -1,32 +1,84 @@
 let api = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/USD`;
-const fromDropDown = document.getElementById("from-currency-select");
-const toDropDown = document.getElementById("to-currency-select");
+const fromCurrencyInput = document.getElementById("fromCurrencyInput");
+const fromAutocompleteItems = document.getElementById("fromAutocompleteItems");
 
 
-currencies.forEach((currency) => {
-  const option = document.createElement("option");
-  option.value = currency;
-  option.text = currency;
-  fromDropDown.add(option);
+const toCurrencyInput = document.getElementById("toCurrencyInput");
+const toAutocompleteItems = document.getElementById("toAutocompleteItems");
+
+
+function filterCurrencies(inputValue) {
+    return currencies.filter(function (currency) {
+        return currency.toUpperCase().startsWith(inputValue.toUpperCase());
+    });
+}
+
+
+function showAutocompleteItems(inputValue, autocompleteItems) {
+    autocompleteItems.innerHTML = "";
+
+    const filteredCurrencies = filterCurrencies(inputValue);
+
+
+    filteredCurrencies.forEach(function (currency) {
+        const item = document.createElement("div");
+        item.classList.add("autocomplete-item");
+        item.textContent = currency;
+        autocompleteItems.appendChild(item);
+    });
+
+    autocompleteItems.style.display = "block";
+}
+
+function hideAutocompleteItems(autocompleteItems) {
+    autocompleteItems.style.display = "none";
+}
+
+
+fromCurrencyInput.addEventListener("input", function () {
+    const inputValue = fromCurrencyInput.value;
+
+    if (inputValue.length > 0) {
+        showAutocompleteItems(inputValue, fromAutocompleteItems);
+    } else {
+        hideAutocompleteItems(fromAutocompleteItems);
+    }
 });
 
 
-currencies.forEach((currency) => {
-  const option = document.createElement("option");
-  option.value = currency;
-  option.text = currency;
-  toDropDown.add(option);
+fromAutocompleteItems.addEventListener("click", function (event) {
+    const selectedCurrency = event.target.textContent;
+    fromCurrencyInput.value = selectedCurrency;
+    hideAutocompleteItems(fromAutocompleteItems);
 });
 
 
-fromDropDown.value = "GBP";
-toDropDown.value = "BRL";
+toCurrencyInput.addEventListener("input", function () {
+    const inputValue = toCurrencyInput.value;
+
+    if (inputValue.length > 0) {
+        showAutocompleteItems(inputValue, toAutocompleteItems);
+    } else {
+        hideAutocompleteItems(toAutocompleteItems);
+    }
+});
+
+
+toAutocompleteItems.addEventListener("click", function (event) {
+    const selectedCurrency = event.target.textContent;
+    toCurrencyInput.value = selectedCurrency;
+    hideAutocompleteItems(toAutocompleteItems);
+});
+
+
+fromCurrencyInput.value = "GBP";
+toCurrencyInput.value = "BRL";
 
 let convertCurrency = () => {
 
   const amount = document.querySelector("#amount").value;
-  const fromCurrency = fromDropDown.value;
-  const toCurrency = toDropDown.value;
+  const fromCurrency = fromCurrencyInput.value;
+  const toCurrency = toCurrencyInput.value;
 
 
   if (amount.length != 0) {
