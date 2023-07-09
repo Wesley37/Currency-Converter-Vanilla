@@ -1,3 +1,3 @@
 Vanilla project
 
-Currency converter using https://exchangeratesapi.io/
+Currency converter using https://www.exchangerate-api.com/
